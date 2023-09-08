@@ -2,9 +2,22 @@
 
 namespace Core;
 
-class App{
-    public function __construct(){}
+class App
+{
+    protected array $routes;
+    public function __construct(){
+        dd(1234);
+    }
 
+    private function parseRoute():string
+    {
 
-    public final function run(){}
+        return '';
+    }
+
+    public final function run():void
+    {
+        $input = file_get_contents('http://input');
+        var_dump($input);
+    }
 }

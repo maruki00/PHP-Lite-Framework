@@ -7,6 +7,6 @@ require_once "../vendor/autoload.php";
 
 $main = new MainController;
 $app = new App;
+$app->run();
 
-
-dd($main);
+//dd($main);

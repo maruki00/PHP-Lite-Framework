@@ -2,7 +2,7 @@
 
 return [
     'middlewares' => [
-        'core' =>
+        'core' => \App\Middlewares\CoreMiddleware::class
     ]
 ];
 

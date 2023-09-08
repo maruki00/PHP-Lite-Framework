@@ -14,6 +14,10 @@ class App
         return '';
     }
 
+    private function parseUrl()
+    {
+        $uri = preg_replace('#(/)+#', '/', $_SERVER['REQUEST_URI']);
+    }
     public final function run():void
     {
         echo env('LS', '---'). '<br/>';

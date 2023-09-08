@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Route;
 
 class Router extends App implements RouteBuilder
 {
-    private  RouteItem $item; //= new RouteItem();
+
+    private  RouteItem $item;
+
     public function __invoke()
     {
         $this->item = new RouteItem();
@@ -48,4 +50,5 @@ class Router extends App implements RouteBuilder
     {
         $this->routes[$this->item->getRoute()] = $this->item;
     }
+
 }

@@ -3,24 +3,22 @@ namespace Core\Router;
 
 use Core\App;
 use Core\Exceptions\MainException;
+use Core\Http\Server;
 use Illuminate\Support\Facades\Route;
 
 class Router implements RouteBuilder
 {
     private static array $allowedMethod ;
     private  RouteItem $item;
+
     public function __construct(
         protected App $app
     ){
         $this->item = new RouteItem();
     }
 
-
-
     public function __invoke()
-    {
-
-    }
+    {}
 
     public function prefix(string $prefix):RouteBuilder
     {
@@ -30,6 +28,7 @@ class Router implements RouteBuilder
 
     public function route(string $route):RouteBuilder
     {
+
         $tmpRoute = "{$this->item->getPrefix()}/$route";
         $tmpRoute = preg_replace('/(\/+)/', '/', $tmpRoute);
         $route    = trim('/',$tmpRoute);
@@ -49,11 +48,12 @@ class Router implements RouteBuilder
         return $this;
     }
 
-    public function httpMethod(string $method):RouteBuilder
-    {
-        $this->item->setHttpMethod($method);
-        return $this;
-    }
+//    public function httpMethod(string $method):RouteBuilder
+//    {
+//        echo "$method<br/>";
+//        $this->item->setHttpMethod($method);
+//        return $this;
+//    }
 
     public function group(callable $calback):RouteBuilder
     {
@@ -67,14 +67,14 @@ class Router implements RouteBuilder
         return $this;
     }
 
-
     public final function method(string $method):RouteBuilder
     {
+        echo "Method <br>";
         $allowedMethod = ['POST', 'GET', 'OPTIONS', 'PATCH', 'DELETE', 'PUT'];
         $method = mb_strtoupper($method);
         if(!in_array($method, $allowedMethod)) {
             echo json_decode(["Invalid Method or Not Allowed"]);
-            die();
+            die(500);
         }
         $this->item->setHttpMethod($method);
         return $this;
@@ -82,8 +82,7 @@ class Router implements RouteBuilder
 
     public function add():void
     {
-        $this->app->setCurrentRoute($this->item);
-        $this->app->setRoute($this->item->getRoute(), $this->item);
+        $this->app->addRoute($this->item);
     }
 
 }

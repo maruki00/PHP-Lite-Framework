@@ -4,12 +4,12 @@ namespace Core\Router;
 
 class RouteItem
 {
-    private string $prefix = '';
-    private string $route = '';
-    private string $action = '';
-    private array $middlwares = [];
-    private string $httpMethod = '';
-    private        $callback = null;
+    private string $prefix      = '';
+    private string $route       = '';
+    private string $action      = '';
+    private array  $middlwares  = [];
+    private string $httpMethod  = '';
+    private        $callback    = null;
 
     /**
      * @return null

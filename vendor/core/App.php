@@ -25,9 +25,9 @@ class App
     {
         return $this->routes[$key];
     }
-    public final function setRoute(string $key, RouteItem $route): void
+    public final function addRoute(RouteItem $route): void
     {
-        $this->routes[$key] = $route;
+        $this->routes[] = $route;
     }
     public final function getCurrentRoute(): RouteItem
     {
@@ -55,7 +55,7 @@ class App
     }
     public final function run():void
     {
-        dd($this->routes, $this->getCurrentRoute());
+        dd($this->routes);
         //echo env('LS', '---'). '<br/>';
         $input = file_get_contents('php://input');
         $this->data = Json::decode($input) ?? [];

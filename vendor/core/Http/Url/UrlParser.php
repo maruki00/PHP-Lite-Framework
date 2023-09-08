@@ -2,7 +2,9 @@
 
 namespace Core\Http;
 
-class UrlParser
+use Core\App;
+
+class UrlParser extends App
 {
     private function generatePattern(string $route, string $url){
         $url = explode('/', trim($url,'/'));
@@ -16,22 +18,25 @@ class UrlParser
         return implode('/', $url);
     }
 
-    private function getParams($route,$url){
-        $route = explode('/', trim($route,'/'));
-        $val = explode('/', trim($url,'/'));
-        if(is_array($route) and is_array($val)){
-            foreach ($route as $key => $value) {
-                if(empty($route[$key]) || empty($val[$key])){
-                    unset($route[$key]);
-                    unset($val[$key]);
-                }else{
-                    if(preg_match('#^\{(.)+\}$#', $value)){
-                        $param = str_replace(['{','}'], '', $value);
-                        $this->params[$param] = $val[$key];
-                    }
+    private function getParams(array $params, string $route, string $url):array
+    {
+        $routePartes = explode('/', trim($route,'/'));
+        $val         = explode('/', trim($url,'/'));
+        if(!(is_array($routePartes) and is_array($val))) {
+            return;
+        }
+        foreach ($routePartes as $key => $value) {
+            if(empty($routePartes[$key]) || empty($val[$key])){
+                unset($routePartes[$key]);
+                unset($val[$key]);
+            }else{
+                if(preg_match('#^\{(.)+\}$#', $value)){
+                    $param = str_replace(['{','}'], '', $value);
+                    $params[$param] = $val[$key];
                 }
             }
         }
+        return $params;
     }
     public static function parse(string $uri):array
     {

@@ -37,6 +37,7 @@
       <path value="$PROJECT_DIR$/vendor/vlucas/phpdotenv" />
       <path value="$PROJECT_DIR$/vendor/core/Exceptions" />
       <path value="$PROJECT_DIR$/vendor/core/Http" />
+      <path value="$PROJECT_DIR$/vendor/core/Files" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

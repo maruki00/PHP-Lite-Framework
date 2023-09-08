@@ -4,11 +4,28 @@ namespace Core\Router;
 
 class RouteItem
 {
-    private string $prefix;
-    private string $route;
-    private string $action;
-    private string $middlware;
-    private string $httpMethod;
+    private string $prefix = '';
+    private string $route = '';
+    private string $action = '';
+    private array $middlwares = [];
+    private string $httpMethod = '';
+    private        $callback = null;
+
+    /**
+     * @return null
+     */
+    public function getCallback()
+    {
+        return $this->callback;
+    }
+
+    /**
+     * @param null $callback
+     */
+    public function setCallback(callable $callback): void
+    {
+        $this->callback = $callback;
+    }
     /**
      * @return string
      */
@@ -60,17 +77,17 @@ class RouteItem
     /**
      * @return string
      */
-    public function getMiddlware()
+    public function getMiddlwares()
     {
-        return $this->middlware;
+        return $this->middlwares;
     }
 
     /**
      * @param string $middlware
      */
-    public function setMiddlware($middlware)
+    public function setMiddlware(array $middlwares)
     {
-        $this->middlware = $middlware;
+        $this->middlwares = $middlwares;
     }
 
     /**

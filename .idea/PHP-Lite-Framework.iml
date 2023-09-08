@@ -41,6 +41,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/core/Exceptions" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/core/Http" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/core/Files" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

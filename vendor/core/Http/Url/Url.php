@@ -5,17 +5,22 @@ namespace Core\Http;
 use Core\App;
 use Core\Exceptions\MainException;
 
-class Url extends App
+class Url
 {
-    public static function parse():array
+
+    public function __construct(
+        protected App $app
+    ){}
+
+    public final function parse():array
     {
-        $data = Server::get();
+        $this->app->setData(Server::get());
+        $data = $this->app->getData();
         if(empty($data))
         {
             throw new MainException('Invalid Request');
         }
         $uri = preg_replace('#(/)+#', '/', $data);
         $requestUri = !in_array($uri, ['/','']) ? trim($uri,'/') : '/';
-
     }
 }

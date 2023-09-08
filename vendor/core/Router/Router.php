@@ -2,53 +2,88 @@
 namespace Core\Router;
 
 use Core\App;
+use Core\Exceptions\MainException;
 use Illuminate\Support\Facades\Route;
 
-class Router extends App implements RouteBuilder
+class Router implements RouteBuilder
 {
-
+    private static array $allowedMethod ;
     private  RouteItem $item;
-
-    public function __invoke()
-    {
+    public function __construct(
+        protected App $app
+    ){
         $this->item = new RouteItem();
     }
 
-    public function prefix(string $prefix){
-        $this->item->setPrefix($prefix);
+
+
+    public function __invoke()
+    {
+
     }
 
-    public function route(string $route)
+    public function prefix(string $prefix):RouteBuilder
+    {
+        $this->item->setPrefix($prefix);
+        return $this;
+    }
+
+    public function route(string $route):RouteBuilder
     {
         $tmpRoute = "{$this->item->getPrefix()}/$route";
         $tmpRoute = preg_replace('/(\/+)/', '/', $tmpRoute);
         $route    = trim('/',$tmpRoute);
         $this->item->setRoute('/'.$route);
+        return $this;
     }
 
-    public function action(string $action)
+    public function action(string $action):RouteBuilder
     {
         $this->item->setAction($action);
+        return $this;
     }
 
-    public function middlware(array $middlewares)
+    public function middlware(array $middlewares):RouteBuilder
     {
         $this->item->setMiddlware($middlewares);
+        return $this;
     }
 
-    public function httpMethod(string $method)
+    public function httpMethod(string $method):RouteBuilder
     {
         $this->item->setHttpMethod($method);
+        return $this;
     }
 
-    public function group(callable $calback)
+    public function group(callable $calback):RouteBuilder
     {
         $calback();
+        return $this;
     }
 
-    public function done()
+    public final function callback(callable $callback):RouteBuilder
     {
-        $this->routes[$this->item->getRoute()] = $this->item;
+        $this->item->setCallback($callback);
+        return $this;
+    }
+
+
+    public final function method(string $method):RouteBuilder
+    {
+        $allowedMethod = ['POST', 'GET', 'OPTIONS', 'PATCH', 'DELETE', 'PUT'];
+        $method = mb_strtoupper($method);
+        if(!in_array($method, $allowedMethod)) {
+            echo json_decode(["Invalid Method or Not Allowed"]);
+            die();
+        }
+        $this->item->setHttpMethod($method);
+        return $this;
+    }
+
+    public function add():void
+    {
+        $this->app->setCurrentRoute($this->item);
+        $this->app->setRoute($this->item->getRoute(), $this->item);
     }
 
 }

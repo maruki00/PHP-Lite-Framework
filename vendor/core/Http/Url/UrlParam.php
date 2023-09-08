@@ -4,8 +4,14 @@ namespace Core\Http\Url;
 
 class UrlParam
 {
-    private static function getParams(array $params, string $route, string $url):array
+    public function __construct(
+        protected App $app
+    ){}
+
+
+    public final function getParams(string $route, string $url):array
     {
+        $params = $this->app->
         $routeParts = explode('/', trim($route,'/'));
         $val        = explode('/', trim($url,'/'));
         if(!(is_array($route) && is_array($val)))
@@ -23,6 +29,6 @@ class UrlParam
                 }
             }
         }
-        return $params;
+        $this->app- $params;
     }
 }

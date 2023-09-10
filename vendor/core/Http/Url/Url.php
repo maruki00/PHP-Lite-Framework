@@ -14,7 +14,7 @@ class Url
 
     public final function parse():array
     {
-        $this->app->setData(Server::get());
+        $this->app->setData(Server::all());
         $data = $this->app->getData();
         if(empty($data))
         {

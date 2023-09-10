@@ -2,108 +2,49 @@
 
 namespace Core\Router;
 
-class RouteItem
+class RouteItem implements RouteBuilder
 {
+
     private string $prefix      = '';
     private string $route       = '';
     private string $action      = '';
+    private string $controller  = '';
     private array  $middlwares  = [];
     private string $httpMethod  = '';
     private        $callback    = null;
 
-    /**
-     * @return null
-     */
-    public function getCallback()
-    {
-        return $this->callback;
-    }
-
-    /**
-     * @param null $callback
-     */
-    public function setCallback(callable $callback): void
-    {
-        $this->callback = $callback;
-    }
-    /**
-     * @return string
-     */
-    public function getPrefix()
-    {
-        return $this->prefix;
-    }
-
-    /**
-     * @param string $prefix
-     */
-    public function setPrefix($prefix)
-    {
+    public function prefix(string $prefix):RouteBuilder{
         $this->prefix = $prefix;
+        return $this;
     }
-
-    /**
-     * @return string
-     */
-    public function getRoute()
-    {
-        return $this->route;
-    }
-
-    /**
-     * @param string $route
-     */
-    public function setRoute($route)
-    {
+    public function route(string $route):RouteBuilder{
         $this->route = $route;
+        return $this;
     }
-
-    /**
-     * @return string
-     */
-    public function getAction()
-    {
-        return $this->action;
-    }
-
-    /**
-     * @param string $action
-     */
-    public function setAction($action)
-    {
+    public function action(string $action):RouteBuilder{
         $this->action = $action;
+        return $this;
     }
-
-    /**
-     * @return string
-     */
-    public function getMiddlwares()
+    public function controller(string $controller):RouteBuilder
     {
-        return $this->middlwares;
+        $this->controller = $controller;
+        return $this;
     }
-
-    /**
-     * @param string $middlware
-     */
-    public function setMiddlware(array $middlwares)
-    {
-        $this->middlwares = $middlwares;
+    public function middlwares(array $middlewares):RouteBuilder{
+        $this->middlwares = $middlewares;
+        return $this;
     }
+    public function method(string $method):RouteBuilder{
 
-    /**
-     * @return string
-     */
-    public function getHttpMethod()
-    {
-        return $this->httpMethod;
+        $this->method = $method;
+        return $this;
     }
-
-    /**
-     * @param string $httpMethod
-     */
-    public function setHttpMethod($httpMethod)
-    {
-        $this->httpMethod = $httpMethod;
+    public function group(callable $calback):RouteBuilder{
+        $calback();
+        return $this;
     }
-
+    public function callback(callable $callback):RouteBuilder{
+        $this->callback = $callback;
+        return $this;
+    }
 }

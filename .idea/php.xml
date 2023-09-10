@@ -25,11 +25,9 @@
       <path value="$PROJECT_DIR$/vendor/illuminate/contracts" />
       <path value="$PROJECT_DIR$/vendor/core/Middleware" />
       <path value="$PROJECT_DIR$/vendor/core/Events" />
-      <path value="$PROJECT_DIR$/vendor/core/Controller" />
       <path value="$PROJECT_DIR$/vendor/core/Cookies" />
       <path value="$PROJECT_DIR$/vendor/core/Sessions" />
       <path value="$PROJECT_DIR$/vendor/core/Requests" />
-      <path value="$PROJECT_DIR$/vendor/core/Response" />
       <path value="$PROJECT_DIR$/vendor/core/Helpers" />
       <path value="$PROJECT_DIR$/vendor/phpoption/phpoption" />
       <path value="$PROJECT_DIR$/vendor/graham-campbell/result-type" />
@@ -38,6 +36,9 @@
       <path value="$PROJECT_DIR$/vendor/core/Exceptions" />
       <path value="$PROJECT_DIR$/vendor/core/Http" />
       <path value="$PROJECT_DIR$/vendor/core/Files" />
+      <path value="$PROJECT_DIR$/vendor/core/Logger" />
+      <path value="$PROJECT_DIR$/vendor/core/Response" />
+      <path value="$PROJECT_DIR$/vendor/core/Controller" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

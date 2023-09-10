@@ -2,87 +2,70 @@
 namespace Core\Router;
 
 use Core\App;
+use Core\Controller\ErrorController;
 use Core\Exceptions\MainException;
 use Core\Http\Server;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ItemNotFoundException;
 
-class Router implements RouteBuilder
+class Router extends App
 {
-    private static array $allowedMethod ;
-    private  RouteItem $item;
-
-    public function __construct(
-        protected App $app
-    ){
-        $this->item = new RouteItem();
-    }
-
-    public function __invoke()
-    {}
-
-    public function prefix(string $prefix):RouteBuilder
+    private static RouteItem $item;
+    
+    private  static function add(string $method, string $route, callable|string|array $controller, array $middlwares=[])
     {
-        $this->item->setPrefix($prefix);
-        return $this;
+        self::$item = new RouteItem();
+        [$controller, $action] = ControllerParse::parse($controller);
+        match($action){
+            is_null($action) => self::$item->callback($controller),
+            default => self::$item->action($action)->controller($controller),
+        };
+        self::$item->method($method)->middlwares($middlwares)->route($route)->prefix('');
+        self::$routes[] = self::$item;
     }
 
-    public function route(string $route):RouteBuilder
+    public static final function get(string $route, callable|string|array $controller, array $middlwares=[]):void
     {
-
-        $tmpRoute = "{$this->item->getPrefix()}/$route";
-        $tmpRoute = preg_replace('/(\/+)/', '/', $tmpRoute);
-        $route    = trim('/',$tmpRoute);
-        $this->item->setRoute('/'.$route);
-        return $this;
+        self::add('GET', $route, $controller, $middlwares);
     }
 
-    public function action(string $action):RouteBuilder
+    public static final function post(string $route, callable|string|array $controller, array $middlwares=[]):void
     {
-        $this->item->setAction($action);
-        return $this;
+        self::add('POST', $route, $controller, $middlwares);
     }
 
-    public function middlware(array $middlewares):RouteBuilder
+    public static final function options(string $route, callable|string|array $controller, array $middlwares=[]):void
     {
-        $this->item->setMiddlware($middlewares);
-        return $this;
+        self::add('OPTIONS', $route, $controller, $middlwares);
     }
 
-//    public function httpMethod(string $method):RouteBuilder
-//    {
-//        echo "$method<br/>";
-//        $this->item->setHttpMethod($method);
-//        return $this;
-//    }
-
-    public function group(callable $calback):RouteBuilder
+    public static final function delete(string $route, callable|string|array $controller, array $middlwares=[]):void
     {
-        $calback();
-        return $this;
+        self::add('DELETE', $route, $controller, $middlwares);
     }
 
-    public final function callback(callable $callback):RouteBuilder
+    public static final function put(string $route, callable|string|array $controller, array $middlwares=[]):void
     {
-        $this->item->setCallback($callback);
-        return $this;
+        self::add('PUT', $route, $controller, $middlwares);
     }
 
-    public final function method(string $method):RouteBuilder
+    public static final function patch(string $route, callable|string|array $controller, array $middlwares=[]):void
     {
-        echo "Method <br>";
-        $allowedMethod = ['POST', 'GET', 'OPTIONS', 'PATCH', 'DELETE', 'PUT'];
-        $method = mb_strtoupper($method);
-        if(!in_array($method, $allowedMethod)) {
-            echo json_decode(["Invalid Method or Not Allowed"]);
-            die(500);
-        }
-        $this->item->setHttpMethod($method);
-        return $this;
+        self::add('PATCH', $route, $controller, $middlwares);
     }
 
-    public function add():void
+    public static final function trace(string $route, callable|string|array $controller, array $middlwares=[]):void
     {
-        $this->app->addRoute($this->item);
+        self::add('TRACE', $route, $controller, $middlwares);
     }
 
+    public static final function connect(string $route, callable|string|array $controller, array $middlwares=[]):void
+    {
+        self::add('CONNECT', $route, $controller, $middlwares);
+    }
+
+    public static final function head(string $route, callable|string|array $controller, array $middlwares=[]):void
+    {
+        self::add('HEAD', $route, $controller, $middlwares);
+    }
 }

@@ -9,10 +9,10 @@ require_once '../vendor/autoload.php';
 use Core\Router\Router;
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/../');
 $dotenv->load();
-$main = new MainController;
 $app = new App;
-$router = new Router($app);
-require_once "../routes/api.php";
+require_once __DIR__.'/../routes/api.php';
+//$router = new Router($app);
+//require_once "../routes/api.php";
 $app->run();
 
 //dd($main);

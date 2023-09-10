@@ -1,8 +1,7 @@
 <?php
 
-global $router;
-echo "hello woejkfsdfjn asdb";
-$router->method('GET')->route('/')->callback(function(){echo 1;})->add();
-echo '<br>sfg';
-$router->method('POST')->route('/sdf')->callback(function(){echo 1;})->add();
-$router->method('OPTIONS')->route('/asdfasd')->callback(function(){echo 1;})->add();
+use Core\Router\Router;
+Router::get('/', ['users', 'index']);
+Router::post('/home', ['users', 'store']);
+Router::put('/items', 'task@index', ['cors', 'auth']);
+Router::put('/items', 'task-index', ['cors', 'auth'])->group();

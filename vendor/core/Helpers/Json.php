@@ -9,8 +9,8 @@ class Json
         return json_encode($data, $flag);
     }
 
-    public static function decode(string $data, bool $associative=true):mixed
+    public static function decode(string $data, bool $associative=true):?array
     {
-        return json_decode($data, true, $associative);
+        return json_decode($data, true);
     }
 }

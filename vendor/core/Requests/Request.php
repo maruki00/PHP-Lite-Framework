@@ -11,7 +11,7 @@ class Request
     }
 
     public final function all(){
-        dd($this);
+        return $this->data;
     }
 
     public function __call(string $name, array $arguments)

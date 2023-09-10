@@ -2,33 +2,33 @@
 
 namespace Core\Http\Url;
 
+use Core\Requests\Request;
+use Core\Router\RouteItem;
+
 class UrlParam
 {
-    public function __construct(
-        protected App $app
-    ){}
-
-
-    public final function getParams(string $route, string $url):array
+    public static final function getParams(RouteItem $route, string $url):?array
     {
-        $params = $this->app->
-        $routeParts = explode('/', trim($route,'/'));
-        $val        = explode('/', trim($url,'/'));
-        if(!(is_array($route) && is_array($val)))
+        $params = [];
+        $route  = explode('/', trim($route->getRoute(),'/'));
+        $val    = explode('/', trim($url,'/'));
+
+        if(!(is_array($route) and is_array($val)))
         {
-            return;
+            return [];
         }
-        foreach ($routeParts as $key => $value) {
-            if(empty($route[$key]) || empty($val[$key])){
-                unset($route[$key]);
-                unset($val[$key]);
-            }else{
-                if(preg_match('#^\{(.)+\}$#', $value)){
-                    $param = str_replace(['{','}'], '', $value);
-                    $params[$param] = $val[$key];
-                }
+        foreach ($route as $key => $value)
+        {
+            if(empty($route[$key]) || empty($val[$key]))
+            {
+                continue;
+            }
+            if(preg_match('#^\{(.)+\}$#', $value))
+            {
+                $param = str_replace(['{','}'], '', $value);
+                $params[$param] = $val[$key];
             }
         }
-        $this->app- $params;
+        return $params;
     }
 }

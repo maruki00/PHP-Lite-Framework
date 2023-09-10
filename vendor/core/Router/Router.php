@@ -10,9 +10,27 @@ use Illuminate\Support\ItemNotFoundException;
 
 class Router extends App
 {
-    private static RouteItem $item;
-    
-    private  static function add(string $method, string $route, callable|string|array $controller, array $middlwares=[])
+    private static string       $prefix      = '';
+    private static array        $middlewares = [];
+    private static RouteItem    $item;
+
+    public static final function middlewares(array $middlewares, callable $callback){
+        self::$middlewares []= $subData['middlewares'] ?? [];
+        $callback();
+    }
+
+    public static final function prefix(string $prefix, callable $callback){
+        self::$prefix .= $prefix ?? '';
+        $callback();
+    }
+
+    public static final function group(array $subData, callable $callback){
+        self::$prefix .= $subData['prefix'] ?? '';
+        self::$middlewares []= $subData['middlewares'] ?? [];
+        $callback();
+    }
+
+    protected  static function   add(string $method, string $route, callable|string|array $controller, array $middlwares=[])
     {
         self::$item = new RouteItem();
         [$controller, $action] = ControllerParse::parse($controller);
@@ -20,7 +38,11 @@ class Router extends App
             is_null($action) => self::$item->callback($controller),
             default => self::$item->action($action)->controller($controller),
         };
-        self::$item->method($method)->middlwares($middlwares)->route($route)->prefix('');
+        $route = trim(self::$prefix.$route, '/');
+
+        self::$item->method($method)
+                ->middlwares([...self::$middlewares, ...$middlwares])
+                ->route("/$route");
         self::$routes[] = self::$item;
     }
 
@@ -68,4 +90,7 @@ class Router extends App
     {
         self::add('HEAD', $route, $controller, $middlwares);
     }
+
+
+
 }

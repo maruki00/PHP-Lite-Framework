@@ -5,7 +5,6 @@ namespace Core\Router;
 class RouteItem implements RouteBuilder
 {
 
-    private string $prefix      = '';
     private string $route       = '';
     private string $action      = '';
     private string $controller  = '';
@@ -13,10 +12,6 @@ class RouteItem implements RouteBuilder
     private string $httpMethod  = '';
     private        $callback    = null;
 
-    public function prefix(string $prefix):RouteBuilder{
-        $this->prefix = $prefix;
-        return $this;
-    }
     public function route(string $route):RouteBuilder{
         $this->route = $route;
         return $this;
@@ -36,15 +31,63 @@ class RouteItem implements RouteBuilder
     }
     public function method(string $method):RouteBuilder{
 
-        $this->method = $method;
-        return $this;
-    }
-    public function group(callable $calback):RouteBuilder{
-        $calback();
+        $this->httpMethod = $method;
         return $this;
     }
     public function callback(callable $callback):RouteBuilder{
         $this->callback = $callback;
         return $this;
+    }
+    public final function params(array $params)
+    {
+
+    }
+
+    /**
+     * @return string
+     */
+    public function getRoute(): string
+    {
+        return $this->route;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAction(): string
+    {
+        return $this->action;
+    }
+
+    /**
+     * @return string
+     */
+    public function getController(): string
+    {
+        return $this->controller;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMiddlwares(): array
+    {
+        return $this->middlwares;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHttpMethod(): string
+    {
+        return $this->httpMethod;
+    }
+
+    /**
+     * @return null
+     */
+    public function getCallback()
+    {
+        return $this->callback;
     }
 }

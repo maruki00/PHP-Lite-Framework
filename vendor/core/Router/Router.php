@@ -15,7 +15,7 @@ class Router extends App
     private static RouteItem    $item;
 
     public static final function middlewares(array $middlewares, callable $callback){
-        self::$middlewares []= $subData['middlewares'] ?? [];
+        self::$middlewares = [...self::$middlewares, ...$subData['middlewares'] ?? []];
         $callback();
     }
 
@@ -26,7 +26,7 @@ class Router extends App
 
     public static final function group(array $subData, callable $callback){
         self::$prefix .= $subData['prefix'] ?? '';
-        self::$middlewares []= $subData['middlewares'] ?? [];
+        self::$middlewares = [ ...self::$middlewares, ...$subData['middlewares'] ?? []];
         $callback();
     }
 
@@ -39,8 +39,9 @@ class Router extends App
             default => self::$item->action($action)->controller($controller),
         };
         $route = trim(self::$prefix.$route, '/');
-
+        
         self::$item->method($method)
+
                 ->middlwares([...self::$middlewares, ...$middlwares])
                 ->route("/$route");
         self::$routes[] = self::$item;

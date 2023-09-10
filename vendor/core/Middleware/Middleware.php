@@ -6,5 +6,5 @@ use Core\Requests\Request;
 
 interface Middleware
 {
-    public function handle(Request $request, \Closure $next);
+    public function handle();
 }

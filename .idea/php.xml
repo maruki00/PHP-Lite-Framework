@@ -39,6 +39,8 @@
       <path value="$PROJECT_DIR$/vendor/core/Logger" />
       <path value="$PROJECT_DIR$/vendor/core/Response" />
       <path value="$PROJECT_DIR$/vendor/core/Controller" />
+      <path value="$PROJECT_DIR$/vendor/core/Validation" />
+      <path value="$PROJECT_DIR$/vendor/core/Facade" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

@@ -4,17 +4,15 @@
 namespace App\Controllers;
 
 
+use Core\Controller\Controller;
 use Core\Requests\Request;
 
-class MainController
+class MainController extends Controller
 {
-    public function __construct()
-    {
-        print("hello world");
-    }
 
-    public final function index(Request $request, string $name, int $id):string
+    public final function index(string $name, int $id)
     {
-        return "124";
+        echo "$name --- $id";
+        return "skdjfhg";
     }
 }

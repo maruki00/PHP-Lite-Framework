@@ -4,6 +4,7 @@ namespace Core\Router;
 
 use Core\App;
 use Core\Controller\ErrorController;
+use Core\Http\Server;
 use Core\Requests\Request;
 
 class CurrentRoute extends App
@@ -14,11 +15,7 @@ class CurrentRoute extends App
         $url = explode('/', trim($url,'/'));
         if(is_array($url)){
             foreach ($url as $key => $value) {
-                if(empty($url[$key]))
-                {
-                    unset($url[$key]);
-                }
-                else
+                if(!empty($url[$key]))
                 {
                     $url[$key] = preg_replace('#^\{(.)+\}$#', '(.)+', $value);
                 }
@@ -35,10 +32,9 @@ class CurrentRoute extends App
             $pattern = self::getPattern($route->getRoute());
             if(preg_match("#^$pattern$#", $requestUri))
             {
-                $route->params((new Request)->all());
                 return $route;
             }
         }
-        return (new RouteItem())->controller(ErrorController::class)->action("error");
+        return (new RouteItem())->method(Server::get('REQUEST_METHOD'));
     }
 }

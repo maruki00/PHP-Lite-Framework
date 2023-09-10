@@ -1,1 +1,5 @@
 [2023-09-10 05:34:14]  : Method Core\Controller\ErrorController::error() does not exist
+[2023-09-10 09:13:57]  : Middleware Not success
+[2023-09-10 09:13:57]  : Middleware Not success[2023-09-10 09:30:50]  : Middleware Not found
+[2023-09-10 09:30:50]  : Middleware Not found
+

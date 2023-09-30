@@ -33,15 +33,13 @@ class Router extends App
     protected  static function   add(string $method, string $route, callable|string|array $controller, array $middlwares=[])
     {
         self::$item = new RouteItem();
-        [$controller, $action] = ControllerParse::parse($controller);
-        match($action){
-            is_null($action) => self::$item->callback($controller),
-            default => self::$item->action($action)->controller($controller),
-        };
+        [$controller, $action, $callback] = ControllerParse::parse($controller);
+
+        self::$item->action($action)->controller($controller)->callback($callback);
+
         $route = trim(self::$prefix.$route, '/');
         
         self::$item->method($method)
-
                 ->middlwares([...self::$middlewares, ...$middlwares])
                 ->route("/$route");
         self::$routes[] = self::$item;

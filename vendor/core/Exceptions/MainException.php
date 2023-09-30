@@ -4,7 +4,7 @@ namespace Core\Exceptions;
 
 use Core\Logger\LoggerStrategy;
 
-class MainException extends \Exception
+class MainException extends \Exception implements \Throwable
 {
     public function __construct(string $message = "", int $code = 500, ?Throwable $previous = null)
     {

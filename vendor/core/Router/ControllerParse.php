@@ -14,17 +14,17 @@ class ControllerParse
             {
                 return [ErrorController::class, 'notfound'];
             }
-            return [$controller, $action];
+            return [$controller, $action, null];
         }else if(is_array($controller)){
             if(count($controller) !== 2)
             {
                 return [ErrorController::class, 'notfound'];
             }
-            return $controller;
+            return [...$controller, null];
         }else if (is_callable($controller))
         {
-            return [$controller, $controller        ];
+            return ['ErrorController', 'notfound', $controller];
         }
-        return [ErrorController::class, 'notfound'];
+        return [ErrorController::class, 'notfound', null];
     }
 }

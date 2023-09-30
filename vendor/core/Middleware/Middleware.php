@@ -2,9 +2,9 @@
 
 namespace Core\Middleware;
 
-use Core\Requests\Request;
+use Core\Requests\IRequest;
 
 interface Middleware
 {
-    public function handle();
+    public function handle(IRequest $request);
 }

@@ -3,12 +3,12 @@
 namespace App\Http\Middlewares;
 
 use Core\Middleware\Middleware;
-use Core\Requests\Request;
+use Core\Requests\IRequest;
 
 class CoreMiddleware implements Middleware
 {
-    public function handle()
+    public final function handle(IRequest $request):bool
     {
-        return false;
+        return true;
     }
 }

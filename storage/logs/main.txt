@@ -1,5 +1,16 @@
-[2023-09-10 05:34:14]  : Method Core\Controller\ErrorController::error() does not exist
-[2023-09-10 09:13:57]  : Middleware Not success
-[2023-09-10 09:13:57]  : Middleware Not success[2023-09-10 09:30:50]  : Middleware Not found
-[2023-09-10 09:30:50]  : Middleware Not found
-
+[2023-09-11 05:18:41]  : Invalid Middleware or Middleware Not Found
+[2023-09-11 05:18:44]  : Invalid Middleware or Middleware Not Found
+[2023-09-11 05:18:47]  : Invalid Middleware or Middleware Not Found
+[2023-09-11 05:21:16]  : Invalid Middleware or Middleware Not Found
+[2023-09-11 05:27:16]  : Invalid Middleware or Middleware Not Found
+[2023-09-11 09:56:13]  : Class "ErrorController" does not exist
+[2023-09-11 09:57:28]  : Class "ErrorController" does not exist
+[2023-09-11 09:59:25]  : Class "ErrorController" does not exist
+[2023-09-11 10:00:28]  : 
+[2023-09-11 10:00:30]  : 
+[2023-09-11 10:02:57]  : Class "ErrorController" does not exist
+[2023-09-11 10:02:58]  : Class "ErrorController" does not exist
+[2023-09-11 10:03:35]  : Class "ErrorController" does not exist
+[2023-09-11 10:03:36]  : Class "ErrorController" does not exist
+[2023-09-11 10:03:36]  : Class "ErrorController" does not exist
+[2023-09-11 10:07:25]  : Class "" does not exist

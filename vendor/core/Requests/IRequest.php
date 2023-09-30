@@ -2,7 +2,7 @@
 
 namespace Core\Requests;
 
-interface RequestFactory
+interface IRequest
 {
 
 }

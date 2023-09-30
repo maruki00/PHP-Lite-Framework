@@ -10,7 +10,7 @@ class RouteItem implements RouteBuilder
     private string $controller  = '';
     private array  $middlwares  = [];
     private string $httpMethod  = '';
-    private        $callback    = null;
+    private        $callback   = null;
 
     public function route(string $route):RouteBuilder{
         $this->route = $route;
@@ -34,7 +34,7 @@ class RouteItem implements RouteBuilder
         $this->httpMethod = $method;
         return $this;
     }
-    public function callback(callable $callback):RouteBuilder{
+    public function callback(?callable $callback):RouteBuilder{
         $this->callback = $callback;
         return $this;
     }

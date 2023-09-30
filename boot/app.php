@@ -5,4 +5,3 @@ return [
         'core' => \App\Http\Middlewares\CoreMiddleware::class
     ]
 ];
-

@@ -12,17 +12,23 @@ class CurrentRoute extends App
 
     private static function getPattern(string $url):string
     {
-        $url = explode('/', trim($url,'/'));
-        if(is_array($url)){
-            foreach ($url as $key => $value) {
-                if(!empty($url[$key]))
-                {
-                    $url[$key] = preg_replace('#^\{(.)+\}$#', '(.)+', $value);
-                }
+        if($url === '/')
+        {
+            return '/';
+        }
+    
+        $url  = explode('/', rtrim($url,'/'));
+        $url  = is_array($url) ? $url : [];
+    
+        foreach ($url as $key => $value) {
+            if(!empty($url[$key]))
+            {
+                $url[$key] = preg_replace('#^\{(.)+\}$#', '(.)+', $value);
             }
         }
+    
         $url = implode('/', $url);
-        return $url[0] ===' /'?$url : "/$url";
+        return $url[0] === '/' ? $url : "/$url";
     }
 
     public static final function current(array $routes, string $requestUri):?RouteItem

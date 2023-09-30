@@ -4,15 +4,16 @@
 namespace App\Controllers;
 
 
+use App\Http\Requests\MainRequest;
 use Core\Controller\Controller;
-use Core\Requests\Request;
+use Core\Response\Response;
+
 
 class MainController extends Controller
 {
 
-    public final function index(string $name, int $id)
+    public final function index(MainRequest $request, string $name, int $id)
     {
-        echo "$name --- $id";
-        return "skdjfhg";
+        return Response::json(['result'=> 'blah blah not found'], 404);
     }
 }

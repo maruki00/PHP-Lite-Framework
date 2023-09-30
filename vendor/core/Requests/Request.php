@@ -2,9 +2,9 @@
 
 namespace Core\Requests;
 
-class Request
+class Request implements IRequest
 {
-    private array $data;
+
     public function __construct()
     {
         $this->data = $_REQUEST;

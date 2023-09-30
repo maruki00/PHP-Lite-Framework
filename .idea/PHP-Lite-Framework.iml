@@ -45,6 +45,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/core/Controller" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/core/Validation" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/core/Facade" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/core/Security" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

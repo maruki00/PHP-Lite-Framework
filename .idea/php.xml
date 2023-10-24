@@ -52,6 +52,8 @@
       <path value="$PROJECT_DIR$/vendor/core/Validation" />
       <path value="$PROJECT_DIR$/vendor/core/Facade" />
       <path value="$PROJECT_DIR$/vendor/core/Security" />
+      <path value="$PROJECT_DIR$/vendor/core/Cache" />
+      <path value="$PROJECT_DIR$/vendor/core/Contructs" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

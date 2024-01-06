@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middlewares;
+namespace App\Presentation\Middlewares;
 
 use Core\Middleware\Middleware;
 use Core\Requests\IRequest;

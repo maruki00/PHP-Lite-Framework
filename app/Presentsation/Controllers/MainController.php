@@ -1,10 +1,9 @@
 <?php
 
 
-namespace App\Controllers;
+namespace App\Presentation\Controllers;
 
-
-use App\Http\Requests\MainRequest;
+use App\Presentation\Requests\MainRequest as RequestsMainRequest;
 use Core\Controller\Controller;
 use Core\Response\Response;
 
@@ -12,7 +11,7 @@ use Core\Response\Response;
 class MainController extends Controller
 {
 
-    public final function index(MainRequest $request, string $name, int $id)
+    public final function index(RequestsMainRequest $request, string $name, int $id)
     {
         return Response::json(['result'=> 'blah blah not found'], 404);
     }

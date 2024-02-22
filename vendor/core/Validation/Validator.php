@@ -1,7 +1,7 @@
 <?php
 
 namespace Core\Validation;
-
+use Core\Exceptions\MainException;
 abstract class Validator
 {
     private array $errors = [];
@@ -24,6 +24,9 @@ abstract class Validator
             }else{
                 $this->errors[$key] = "Invalid Data or Missing.";
             }
+        }
+        if(!empty($this->errors)){
+            throw new MainException(json_decode($this->errors), 500);
         }
         return $this;
     }

@@ -26,7 +26,7 @@ abstract class Validator
             }
         }
         if(!empty($this->errors)){
-            throw new MainException(json_decode($this->errors), 500);
+            throw new MainException(json_encode($this->errors, JSON_UNESCAPED_UNICODE), 500);
         }
         return $this;
     }

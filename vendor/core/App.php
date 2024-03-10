@@ -129,7 +129,8 @@ class App
             $constructParams = array_map(function($param){
                 return $this->getItem($param->getType()->getName()) ?? new ($param->getType()->getName()) ?? null;
             }, $clsReflexion->getConstructor()->getParameters());
-
+            
+            dd($controller);
             $controllerCls  =  new $controller(...$constructParams);
             $response       = $controllerCls->{$action}(...$urlParams);
             echo $response;

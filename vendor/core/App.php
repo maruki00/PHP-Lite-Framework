@@ -8,10 +8,7 @@
  */
 namespace Core;
 
-use App\Domain\Event\Contracts\IEventRepository;
-use App\Domain\Event\UseCases\AddEvent\Response\AddEventOutputPort;
 use Core\Controller\ErrorController;
-use Core\Exceptions\MainException;
 use Core\Http\Server;
 use Core\Http\Url\UrlParam;
 use Core\Middleware\Middleware;
@@ -73,7 +70,8 @@ class App
 
     private function getRequestUri():string
     {
-        return preg_replace('#(/(\.+)?)+#', '/', Server::get('REQUEST_URI'));
+        $uri = explode('#', Server::get('REQUEST_URI'))[0] ?? '/';
+        return preg_replace('#(/(\.+)?)+#', '/',  $uri);
     }
 
     private function runMiddleware(Middleware $middleware, IRequest $request)

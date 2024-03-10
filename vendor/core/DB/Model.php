@@ -2,9 +2,8 @@
 
 namespace Core\DB;
 
+use Core\DB\Builers\Query;
 
-abstract class Model
+abstract class Model extends Query
 {
-    private string $query = '';
-
 }

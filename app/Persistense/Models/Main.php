@@ -2,9 +2,10 @@
 
 namespace App\Persistence\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Core\DB\Model;
 
-class MainModel extends Model
+class Main extends Model
 {
+    protected $table = 'mains';
     protected $fillable = ['name'];
 }

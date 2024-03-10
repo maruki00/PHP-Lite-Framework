@@ -1,7 +1,15 @@
 <?php
-
+/*
+ * Author : Abdellah Oulahyane
+ *
+ *
+ *
+ *
+ */
 namespace Core;
 
+use App\Domain\Event\Contracts\IEventRepository;
+use App\Domain\Event\UseCases\AddEvent\Response\AddEventOutputPort;
 use Core\Controller\ErrorController;
 use Core\Exceptions\MainException;
 use Core\Http\Server;
@@ -12,22 +20,60 @@ use Core\Requests\FormRequest;
 use Core\Requests\IRequest;
 use Core\Requests\Request;
 use Core\Router\CurrentRoute;
-use JetBrains\PhpStorm\NoReturn;
 use ReflectionMethod;
 
 class App
 {
-    protected static array $routes = [];
+
+    public static array $Container   = [];
+    protected static array $middlewares = [];
+    protected static array $routes      = [];
     protected array $data;
     protected static array $params;
     protected static int   $statusCode = 200;
 
     public function __construct(){}
 
+    public final function singleton(string $key, string $value, ?array $params=null):void
+    {
+        $obj = self::$Container[$key] ?? null;
+        if(!isset($obj) || !$obj)
+        {
+            $newObj = is_null($params) ? new $value : new $value($params);
+            self::$Container[$key] = new $newObj;
+        }
+    }
+    public function bind(string $key, string|callable $value):void
+    {
+        self::$Container[$key] = is_string($value) ? new $value : $value;
+    }
+
+    public static function app(string $key):mixed
+    {
+        return self::$Container[$key];
+    }
+
+    public function getItem(string $key):mixed
+    {
+
+        $retObj =  self::$Container[$key] ?? null;
+
+//        if($key == AddEventOutputPort::class){
+//            dd($key ,self::$Container[$key], self::$Container);
+//        }
+
+        return  match (gettype($retObj)){
+            'string' => new self::$Container[$retObj] ?? new $retObj ?? null,
+            "callable", 'object' => $retObj,
+            default => null
+        };
+    }
+
+
+
     private function getRequestUri():string
     {
-        $uri = explode('#', Server::get('REQUEST_URI'))[0] ?? '/';
-        return preg_replace('#(/(\.+)?)+#', '/', $uri);
+        return preg_replace('#(/(\.+)?)+#', '/', Server::get('REQUEST_URI'));
     }
 
     private function runMiddleware(Middleware $middleware, IRequest $request)
@@ -36,7 +82,10 @@ class App
     }
 
 
-    #[NoReturn] public final function run():void
+    /**
+     * @throws \Exception
+     */
+    public final function run():void
     {
         try{
             $requestUri     = $this->getRequestUri();
@@ -51,6 +100,7 @@ class App
                 true    => new \ReflectionFunction($currentRoute->getCallback()),
                 default => new ReflectionMethod($currentRoute->getController(), $currentRoute->getAction()),
             };
+
             collect($reflection->getParameters())->map(function($parameter) use (&$urlParams, &$request){
                 if(is_subclass_of($parameter->getType()->getName(), FormRequest::class))
                 {
@@ -65,6 +115,7 @@ class App
                     throw new \Exception("Invalid Middleware or Middleware Not Found");
                 }
             });
+
             if(is_callable($currentRoute->getCallback()))
             {
                 call_user_func($currentRoute->getCallback(),...$urlParams);
@@ -73,11 +124,15 @@ class App
             if(!class_exists($controller) || !method_exists($controller, $action))
             {
                 echo (new ErrorController())->notfound();
-
                 die;
             }
+            $clsReflexion = new \ReflectionClass($currentRoute->getController());
 
-            $controllerCls  =  new $controller();
+            $constructParams = array_map(function($param){
+                return $this->getItem($param->getType()->getName()) ?? new ($param->getType()->getName()) ?? null;
+            }, $clsReflexion->getConstructor()->getParameters());
+
+            $controllerCls  =  new $controller(...$constructParams);
             $response       = $controllerCls->{$action}(...$urlParams);
             echo $response;
             die;

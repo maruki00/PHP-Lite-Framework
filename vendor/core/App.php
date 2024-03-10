@@ -26,7 +26,8 @@ class App
 
     private function getRequestUri():string
     {
-        return preg_replace('#(/(\.+)?)+#', '/', Server::get('REQUEST_URI'));
+        $uri = explode('#', Server::get('REQUEST_URI'))[0] ?? '/';
+        return preg_replace('#(/(\.+)?)+#', '/', $uri);
     }
 
     private function runMiddleware(Middleware $middleware, IRequest $request)

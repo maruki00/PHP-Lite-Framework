@@ -5,7 +5,7 @@ namespace Core\DB\Builers;
 
 use Core\DB\Contracts\IQueryBuilder;
 
-class Query implements IQueryBuilder{
+abstract class Query implements IQueryBuilder{
     private string $proplog = 'select ';
     private array $params = [];
     protected array  $columns;
@@ -80,7 +80,7 @@ class Query implements IQueryBuilder{
     {
         return $this;
     }  
-    
+
     public function select(array $columns) :   IQueryBuilder
     {
         return $this;

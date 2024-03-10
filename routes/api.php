@@ -1,10 +1,15 @@
 <?php
 
 use Core\Router\Router;
-use App\Persistence\Models\Main;
+
 use App\Persistence\Models\TestModel;
+use Core\DB\Model;
 
 Router::get('/', function(){
 
-    new Main;
+    class Main extends Model{
+
+    }
+
+    new Main();
 });

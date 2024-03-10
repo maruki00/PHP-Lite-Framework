@@ -85,6 +85,7 @@ class App
      */
     public final function run():void
     {
+        
         try{
             $requestUri     = $this->getRequestUri();
             $currentRoute   = CurrentRoute::current(self::$routes, $requestUri);
@@ -106,6 +107,8 @@ class App
                     $urlParams[$parameter->getName()]= $request;
                 }
             });
+
+
             $request = $request ?? new Request();
             collect($currentRoute->getMiddlwares())->map(function($item) use ($request){
                 $middleware = MiddlewareFactory::create($item);
@@ -114,11 +117,13 @@ class App
                 }
             });
 
+
             if(is_callable($currentRoute->getCallback()))
             {
                 call_user_func($currentRoute->getCallback(),...$urlParams);
                 die;
             }
+
             if(!class_exists($controller) || !method_exists($controller, $action))
             {
                 echo (new ErrorController())->notfound();
